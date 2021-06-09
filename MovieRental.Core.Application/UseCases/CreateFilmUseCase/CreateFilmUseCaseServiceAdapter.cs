@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MovieRental.Core.Application.UseCases.CreateFilmUseCase
 {
-    public class CreateFilmUseCaseService : ICreateFilmUseCaseServiceAdapter
+    public class CreateFilmUseCaseHandler : ICreateFilmUseCaseServiceAdapter
     {
         private readonly IFilmRepositoryAdapter _filmAdapterRepository;
 
-        public CreateFilmUseCaseService(IFilmRepositoryAdapter filmAdapterRepository)
+        public CreateFilmUseCaseHandler(IFilmRepositoryAdapter filmAdapterRepository)
         {
             _filmAdapterRepository = filmAdapterRepository;
         }

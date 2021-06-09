@@ -1,9 +1,10 @@
 ﻿using FluentValidation.Results;
+using MediatR;
 using System.Text.Json.Serialization;
 
 namespace MovieRental.Domain.Core.Messaging.Commands
 {
-    public abstract class Command<TResult> : CommandResponse<TResult>
+    public abstract class Command<TResult> : IRequest<CommandResponse<TResult>>
     {
 
         /// <summary>
@@ -16,7 +17,7 @@ namespace MovieRental.Domain.Core.Messaging.Commands
         /// Verifica se o comando está em um estado válido.
         /// </summary>
         /// <returns>Retorna true se o comando é válido; caso contrário retorna false.</returns>
-        public new virtual bool IsValid()
+        public virtual bool IsValid()
         {
             return true;
         }

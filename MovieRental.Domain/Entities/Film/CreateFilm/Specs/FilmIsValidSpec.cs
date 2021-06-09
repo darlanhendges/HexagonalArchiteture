@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MovieRental.Domain.Core.CrossCutting.Entities;
+using MovieRental.Domain.Entities.Film.Validations;
 
 namespace MovieRental.Domain.Entities.Film.CreateFilm.Specs
 {
@@ -7,19 +7,9 @@ namespace MovieRental.Domain.Entities.Film.CreateFilm.Specs
     {
         public FilmIsValidSpec()
         {
-            RuleFor(x => x.Name).Must(ValidateEmptyString).WithMessage(Globalization.NameIsEmpty())
-                .MinimumLength(20).WithMessage(Globalization.NameNeedHave20());
-
-            RuleFor(x => x.Description).Must(ValidateEmptyString).WithMessage(Globalization.DescriptionIsEmpty())
-                .MinimumLength(30).WithMessage(Globalization.DescriptionNeedHave30());
-
-            RuleFor(x => x.IdCategory).GreaterThan(0).WithMessage(Globalization.CategoryInvalid());
-
+            Include(new FilmNameIsnotEmptyValidation());
+            Include(new FilmDescriptionIsValidValidation());
+            Include(new FilmIdCategoryGreatherThanZeroValidation());
         }
-        private bool ValidateEmptyString(string arg)
-        {
-            return !string.IsNullOrWhiteSpace(arg != null ? arg.Trim() : arg);
-        }
-
     }
 }

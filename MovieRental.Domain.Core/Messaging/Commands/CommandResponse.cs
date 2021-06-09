@@ -7,6 +7,9 @@ namespace MovieRental.Domain.Core.Messaging.Commands
 {
     public class CommandResponse<TResult>
     {
+        private TResult result;
+        private ValidationResult validationResult;
+
         public TResult Result { get; protected set; }
         public bool IsValid => !Errors.Any();
         public IEnumerable<ValidationFailure> Errors { get; private set; }
@@ -26,6 +29,12 @@ namespace MovieRental.Domain.Core.Messaging.Commands
         public CommandResponse(IEnumerable<ValidationFailure> errors)
         {
             Errors = errors;
+        }
+
+        public CommandResponse(TResult result, ValidationResult validationResult)
+        {
+            this.result = result;
+            this.validationResult = validationResult;
         }
 
         public void LoadValidation(ValidationResult validationErrors)

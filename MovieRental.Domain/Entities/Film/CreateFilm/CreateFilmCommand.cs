@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using MediatR;
 using MovieRental.Domain.Core.CrossCutting.Entities;
 using MovieRental.Domain.Core.Messaging.Commands;
 using System;
 
 namespace MovieRental.Domain.Entities.Film.CreateFilm
 {
-    public class CreateFilmCommand : Command<long>
+    public class CreateFilmCommand : Command<CreateFilmCommandOutput>
     {
-
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int IdCategory { get; private set; }
@@ -19,7 +19,7 @@ namespace MovieRental.Domain.Entities.Film.CreateFilm
             Description = description;
             IdCategory = idCategory;
         }
-      
+
         public override bool IsValid()
         {
             var v = new InlineValidator<CreateFilmCommand>();

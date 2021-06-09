@@ -11,7 +11,7 @@ namespace MovieRental.Core.Application.Tests.UseCases.CreateFilmUseCase
 
         public CreateFilmUseCaseServiceTests()
         {
-            _createFilmUseCaseServiceAdapter = new CreateFilmUseCaseService(new FilmRepositoryAdapterFake());
+            _createFilmUseCaseServiceAdapter = new CreateFilmUseCaseHandler(new FilmRepositoryAdapterFake());
         }
 
         [Theory]
@@ -29,7 +29,6 @@ namespace MovieRental.Core.Application.Tests.UseCases.CreateFilmUseCase
 
         [Theory]
         [InlineData("Darlan Hendges valdo", "Descriação bem válida Descriação bem válidaDescriação bem válidaDescriação bem válidaDescriação bem válidaDescriação bem válidaDescriação bem válida ", 220)]
-        [InlineData("", "Descriação bem válida Descriação bem válidaDescriação bem válidaDescriação bem válidaDescriação bem válidaDescriação bem válidaDescriação bem válida ", 220)]
         public async void IsEverything_True(string name, string description, int category)
         {
             var response = await _createFilmUseCaseServiceAdapter.CreateFilmAsync(new Domain.Entities.Film.CreateFilm.CreateFilmCommand(name, description, category));

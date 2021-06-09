@@ -11,7 +11,7 @@ namespace MovieRental.Domain.Tests.Entities.Film.CreateFilm
 
         [Theory]
         [InlineData(" ", "    ", -10)]
-        [InlineData(null,null, 0)]
+        [InlineData(null, null, 0)]
         public void IsEverything_IsFalse(string name, string description, int category)
         {
             _command = new CreateFilmCommand(name, description, category);
@@ -35,30 +35,26 @@ namespace MovieRental.Domain.Tests.Entities.Film.CreateFilm
 
         [Theory]
         [InlineData("Nome válido Nome válido", "", 10)]
-        [InlineData("Nome válido Nome válido", null, 10)]
+        [InlineData("Nome válido Nome válido", "                              ", 10)]
         public void Description_LenghHaventEnough(string name, string description, int category)
         {
             _command = new CreateFilmCommand(name, description, category);
             var isValid = _command.IsValid();
 
             Assert.False(isValid);
+            Assert.True(_command.ValidationResult.Errors.Count > 0);
+        }
 
-            if (!string.IsNullOrEmpty(description != null ? description.Trim() : description))
-            {
-                Assert.Single(_command.ValidationResult.Errors);
-                Assert.Equal(Globalization.DescriptionNeedHave30(), _command.ValidationResult.Errors[0].ErrorMessage);
-            }
-            else if (description == null)
-            {
-                Assert.Single(_command.ValidationResult.Errors);
-                Assert.Single(_command.ValidationResult.Errors.Where(e => e.ErrorMessage.Equals(Globalization.DescriptionIsEmpty())));
-            }
-            else
-            {
-                Assert.Equal(2, _command.ValidationResult.Errors.Count);
-                Assert.Single(_command.ValidationResult.Errors.Where(e => e.ErrorMessage.Equals(Globalization.DescriptionIsEmpty())));
-                Assert.Single(_command.ValidationResult.Errors.Where(e => e.ErrorMessage.Equals(Globalization.DescriptionNeedHave30())));
-            }
+        [Theory]
+        [InlineData("Nome válido Nome válido", null, 10)]
+        public void Description_NULL_IsFalse(string name, string description, int category)
+        {
+            _command = new CreateFilmCommand(name, description, category);
+            var isValid = _command.IsValid();
+
+            Assert.False(isValid);
+            Assert.Single(_command.ValidationResult.Errors);
+            Assert.Single(_command.ValidationResult.Errors.Where(e => e.ErrorMessage.Equals(Globalization.DescriptionIsEmpty())));
         }
 
 
