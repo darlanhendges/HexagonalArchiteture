@@ -7,16 +7,14 @@ namespace MovieRental.Domain.Core.Messaging.Commands
 {
     public class CommandResponse<TResult>
     {
-        private TResult result;
         private ValidationResult validationResult;
 
         public TResult Result { get; protected set; }
         public bool IsValid => !Errors.Any();
-        public IEnumerable<ValidationFailure> Errors { get; private set; }
+        public IEnumerable<ValidationFailure> Errors { get; private set; } = Array.Empty<ValidationFailure>();
 
         public CommandResponse()
         {
-            this.Errors = Array.Empty<ValidationFailure>();
         }
 
         public CommandResponse(ValidationResult validationResult)
@@ -33,8 +31,10 @@ namespace MovieRental.Domain.Core.Messaging.Commands
 
         public CommandResponse(TResult result, ValidationResult validationResult)
         {
-            this.result = result;
+            this.Result = result;
             this.validationResult = validationResult;
+
+            LoadValidation(validationResult);
         }
 
         public void LoadValidation(ValidationResult validationErrors)

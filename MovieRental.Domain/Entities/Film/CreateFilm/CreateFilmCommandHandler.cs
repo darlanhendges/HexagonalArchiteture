@@ -16,7 +16,6 @@ namespace MovieRental.Domain.Entities.Film.CreateFilm
             _filmRepositoryAdapter = filmRepositoryAdapter;
         }
 
-
         public override async Task<CommandResponse<CreateFilmCommandOutput>> Handle(CreateFilmCommand request, CancellationToken cancellationToken)
         {
             if (!request.IsValid())
