@@ -10,10 +10,12 @@ namespace MovieRental.Domain.Entities.Film.CreateFilm
     public class CreateFilmCommandHandler : CommandHandler<CreateFilmCommand, CreateFilmCommandOutput>
     {
         private readonly IFilmRepositoryAdapter _filmRepositoryAdapter;
+        private readonly ICategoryRepositoryAdapter _categoryRepositoryAdapter;
 
-        public CreateFilmCommandHandler(IFilmRepositoryAdapter filmRepositoryAdapter)
+        public CreateFilmCommandHandler(IFilmRepositoryAdapter filmRepositoryAdapter, ICategoryRepositoryAdapter categoryRepositoryAdapter)
         {
             _filmRepositoryAdapter = filmRepositoryAdapter;
+            _categoryRepositoryAdapter = categoryRepositoryAdapter;
         }
 
         public override async Task<CommandResponse<CreateFilmCommandOutput>> Handle(CreateFilmCommand request, CancellationToken cancellationToken)
@@ -26,7 +28,7 @@ namespace MovieRental.Domain.Entities.Film.CreateFilm
             if (!film.ValidationResult.IsValid)
                 return Response(film.ValidationResult);
 
-            var validationResultCategory = new FilmIsValidToCreateSpec(_filmRepositoryAdapter).Validate(film);
+            var validationResultCategory = new FilmIsValidToCreateSpec(_categoryRepositoryAdapter).Validate(film);
 
             if (!validationResultCategory.IsValid)
                 return Response(validationResultCategory);

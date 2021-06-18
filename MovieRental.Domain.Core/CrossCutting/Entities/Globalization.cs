@@ -11,6 +11,7 @@ namespace MovieRental.Domain.Core.CrossCutting.Entities
         public static string CategoryInvalid() => "A categoria está inválida";
 
         public static string DescriptionNeedHave30() => "A categoria precisa ter 30 caracteres";
+        public static string CategoryDoesntExist() => "A categoria não existe";
         public static string IdFilmIsInvalid() => "O Id do film está inválido";
     }
 }

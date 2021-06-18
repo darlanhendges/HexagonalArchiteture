@@ -7,10 +7,10 @@ namespace MovieRental.Domain.Entities.Film.CreateFilm.Specs
     public class FilmIsValidToCreateSpec : AbstractValidator<Entities.Film.Film>
     {
 
-        public FilmIsValidToCreateSpec(IFilmRepositoryAdapter _filmRepositoryAdapter)
+        public FilmIsValidToCreateSpec(ICategoryRepositoryAdapter _categoryRepositoryAdapter)
         {
             Include(new FilmIsValidSpec());
-            Include(new FilmIdCategoryExistsValidation(_filmRepositoryAdapter));
+            Include(new FilmIdCategoryExistsValidation(_categoryRepositoryAdapter));
         }
     }
 }

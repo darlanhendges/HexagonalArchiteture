@@ -6,5 +6,14 @@ namespace MovieRental.Domain.Entities.Category
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
+
+
+        public Category(int id, string name)
+        {
+            this.Name = name;
+            this.Id = id;
+
+
+        }
     }
 }
